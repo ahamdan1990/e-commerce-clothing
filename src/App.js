@@ -5,6 +5,7 @@ import './App.css';
 
 import  HomePage  from './pages/homepage/homepage.component';
 import  ShopPage  from './pages/shop/shop.component';
+import Header from './components/header/header.component';
 
 //Demostrating the Link 
 // const HatsPage = (props) => (
@@ -19,6 +20,8 @@ const App = () => {
   return (
     <div className="App">
       {/* <HomePage /> */}
+      {/* When we place component outside the Switch component it will always be rendered onto the screen and will not be part of the route thing  */}
+      <Header />
       <Switch>
       
         <Route exact path='/' component={HomePage} />
