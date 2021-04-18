@@ -71,6 +71,7 @@ class SignIn extends React.Component {
                         handleChange={handleChange}
                         label="password" 
                         required
+                        autoComplete="on"
                     />
                     
                     <div className="buttons">
@@ -79,7 +80,7 @@ class SignIn extends React.Component {
                         </CustomButton>
 
                         {/* here we're using signInWithGoogle method that we define it in the firebase utils  */}
-                        <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+                        <CustomButton type="button" onClick={signInWithGoogle} isGoogleSignIn>
                             SIGN IN with google
                         </CustomButton>
                     </div>
