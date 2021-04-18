@@ -41,7 +41,7 @@ const Header  = ({currentUser,hidden}) => (
             }
             <CartIcon />
         </nav>
-        <CartDropdown className={`cart-dropdown ${hidden ? 'not-visible' : 'visible'}`}/>
+        <CartDropdown />
     </div>
 )
 

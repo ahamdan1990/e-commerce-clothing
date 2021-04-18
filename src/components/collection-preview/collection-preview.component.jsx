@@ -16,8 +16,8 @@ const CollectionPreview = ({title,items}) => {
             <div className="preview">
             {/* Here we're using the filter method that returns an array to limit the array items to 4 so and we're doing that by passing index argument which when it will return any item that have index < 4 */}     
                 {  
-                    items.filter((item,index) => index < 4).map(({id, ...otherItemsProps}) => (
-                        <CollectionItem key={id} { ...otherItemsProps } />
+                    items.filter((item,index) => index < 4).map(item => (
+                        <CollectionItem key={item.id} item={item} />
                     ))
                 }
             </div>

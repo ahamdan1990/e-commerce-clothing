@@ -11,6 +11,7 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 
 import Header from './components/header/header.component';
 
+import { toggleCartHidden } from './redux/cart/cart.actions';
 //here we're importing the auth method that we define it in the firebase utils files so we know if a user have been authenticated to our app and what to do with this authenticatin 
 import {auth,createUserProfileDocument} from './firebase/firebase.utils';
 
@@ -61,9 +62,15 @@ class App extends React.Component {
     this.unsbscribeFromAuth();
   }
 
+  handleOnClick = () => {
+    // if (!this.props.hidden) {
+    //   this.props.toggleCartHidden()
+    // }
+  }
+
   render() {
     return (
-      <div className="App">
+      <div className="App" onClick={this.handleOnClick}>
         {/* <HomePage /> */}
 
         {/* When we place component outside the Switch component it will always be rendered onto the screen and will not be part of the route thing  */}
@@ -89,12 +96,14 @@ class App extends React.Component {
 
 }
 
-const mapStateToProps = ({user}) => ({
+const mapStateToProps = ({user,cart:{hidden}}) => ({
   currentUser: user.currentUser,
+  hidden,
 })
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  toggleCartHidden: () => dispatch(toggleCartHidden()),
 })
 
 //We passed nul for the first function because we don't need any state from our reducer we only want to set the reducer

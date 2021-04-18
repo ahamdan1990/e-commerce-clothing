@@ -5,8 +5,12 @@ import { combineReducers } from 'redux';
 
 import userReducer from './user/user.reducer';
 import cartReducer from './cart/cart.reducer';
+import directorySections from './directory/directory.reducer';
+import shopDataReducer from './shop-data/shop-data.reducer';
 
 export default combineReducers({
     user: userReducer,
     cart: cartReducer,
+    sections: directorySections,
+    shop_data: shopDataReducer,
 })
