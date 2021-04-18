@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch,Route } from 'react-router-dom';
+import { Switch,Route,Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import './App.css';
@@ -73,7 +73,14 @@ class App extends React.Component {
         
           <Route exact path='/' component={HomePage} />
           <Route path='/shop' component={ShopPage} />
-          <Route path='/signin' component={SignInAndSignUpPage} />
+
+          <Route 
+            exact 
+            path='/signin' 
+            render={
+              ()=>this.props.currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)
+            } 
+          />
 
         </Switch>
       </div>
@@ -82,9 +89,13 @@ class App extends React.Component {
 
 }
 
+const mapStateToProps = ({user}) => ({
+  currentUser: user.currentUser,
+})
+
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 })
 
 //We passed nul for the first function because we don't need any state from our reducer we only want to set the reducer
-export default connect(null,mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);
