@@ -1,5 +1,6 @@
 import {createStore, applyMiddleware} from 'redux';
 import logger from 'redux-logger';
+import { persistStore } from 'redux-persist';
 
 import rootReducer from './root-reducer';
 
@@ -7,6 +8,10 @@ import rootReducer from './root-reducer';
 const middlewares = [logger];
 
 //setup the store by calling the createstore functions which take the rootReducer and applyMiddleware function which we pass into it all the middlewares we want to use by spreading them as param for this function
-const store = createStore(rootReducer,applyMiddleware(...middlewares));
+export const store = createStore(rootReducer,applyMiddleware(...middlewares));
 
-export default store;
+// We wrap our store with persisStore that we imported from redux-persist
+export const persistor = persistStore(store);
+
+// eslint-disable-next-line import/no-anonymous-default-export
+// export default {store,persistor};

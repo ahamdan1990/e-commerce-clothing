@@ -40,7 +40,6 @@ class App extends React.Component {
     const {setCurrentUser} = this.props;
     //this is a method from the firebase auth library that will take a function that have a param of the user state on the auth at our firebase project and get back a function that lets us unsubscribe from the listener we just instantiated which we are store it into the unsbscibeFromAuth so we can stop the onAuthStateChange listener after we get authenticated
     this.unsbscribeFromAuth = auth.onAuthStateChanged(async userAuth =>{
-
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 

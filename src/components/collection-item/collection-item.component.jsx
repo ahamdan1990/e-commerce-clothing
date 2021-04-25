@@ -3,11 +3,12 @@ import CustomButton from '../custom-button/custom-button.component';
 import {connect} from 'react-redux';
 import { addItem } from '../../redux/cart/cart.actions';
 import './collection-item.styles.scss';
+import { withRouter } from 'react-router';
 
-const CollectionItem = ({item,addItem}) => {
+const CollectionItem = ({item,addItem,history,match}) => {
     const {imageUrl,name,price} = item;
     return (
-    <div className="collection-item">
+    <div className="collection-item" onClick={()=>  match.path === '/shop' ? '' : history.push(`${match.url}/${name}`)}>
         <div 
             className="image"
             style={{
@@ -28,4 +29,4 @@ const mapDispatchToProps = (dispatch) => ({
     addItem: item => dispatch(addItem(item))
 })
 
-export default connect(null,mapDispatchToProps)(CollectionItem);
+export default withRouter(connect(null,mapDispatchToProps)(CollectionItem));

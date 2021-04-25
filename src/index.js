@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 
 // here we're going to import the component that we get from the react-redux that will give our application access to the store and to the reducer that we're going to write.
 
@@ -11,13 +12,15 @@ import { BrowserRouter } from 'react-router-dom'
 import {Provider} from 'react-redux';
 
 // we immport the store to pass it to the provider component so we can have access to our reducers and store
-import store from './redux/store';
+import {persistor ,store} from './redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
