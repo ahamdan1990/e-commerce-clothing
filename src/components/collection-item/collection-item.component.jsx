@@ -5,15 +5,16 @@ import { addItem } from '../../redux/cart/cart.actions';
 import './collection-item.styles.scss';
 import { withRouter } from 'react-router';
 
-const CollectionItem = ({item,addItem,history,match}) => {
+const CollectionItem = ({item,addItem,history,routeName,path}) => {
     const {imageUrl,name,price} = item;
     return (
-    <div className="collection-item" onClick={()=>  match.path === '/shop' ? '' : history.push(`${match.url}/${name}`)}>
+    <div className="collection-item">
         <div 
             className="image"
             style={{
                 backgroundImage: `url(${imageUrl})`
             }}
+            onClick={()=> history.push(`${path ? path+'/':''}${routeName}/${item.id}`)}
         />
 
         <div className="collection-footer">

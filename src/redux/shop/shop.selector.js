@@ -35,3 +35,10 @@ export const selectCollection = memoize(collectionUrlParm =>
         collections => collections[collectionUrlParm]
     )
 )
+
+export const selectItem = (itemId,collectionId) => {
+    return createSelector(
+                [selectCollection(collectionId)],
+                    collection => collection.items[itemId]
+            )
+}

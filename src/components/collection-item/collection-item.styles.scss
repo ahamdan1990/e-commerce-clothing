@@ -5,6 +5,7 @@
     height: 350px;
     align-items: center;
     position: relative;
+    cursor: pointer;
  
   
     .image {
@@ -32,6 +33,7 @@
       & .custom-button {
         opacity: 0.85;
         display: block;
+        z-index: 10;
       }
 
     }
