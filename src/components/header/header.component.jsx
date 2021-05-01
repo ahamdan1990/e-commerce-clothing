@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 
 // connect is a higher order component that gets either one of 2 functions the first one we can call it mapStateToProps which gives us the ability to retreive the state from the rootReducer based on our needs 
 //and the second one 
@@ -17,38 +17,52 @@ import CartDropdown from '../cart-dropdown/cart-dropdrown.component';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 
-import './header.styles.scss';
+// import './header.styles.scss';
 import { createStructuredSelector } from 'reselect';
 
+import { HeaderContainer,LogoContainer,OptionsContainer,OptionLink } from './header.styles';
+
 const Header  = ({currentUser,dispatch,hidden}) => (
-    <div className="header"> 
-        <Link to='/' className='logo-container' onClick={()=>hidden ? null : dispatch(toggleCartHidden())}>
-            <Logo className='logo' />
-        </Link>
-        <nav className="options">
-            <Link className="option" to='/shop'>
+
+    <HeaderContainer>
+
+        <LogoContainer to='/' onClick={()=>hidden ? null : dispatch(toggleCartHidden())}>
+            <Logo />
+        </LogoContainer>
+
+        <OptionsContainer>
+
+            <OptionLink to='/shop'>
                 Shop
-            </Link>
-            <Link className="option" to='/shop'>
+            </OptionLink>
+
+            <OptionLink to='/shop'>
                 CONTACT
-            </Link>
+            </OptionLink>
+            {/* Here in the below we're using OptionLink as 'div' instead of declaring 2 component that have the same style */}
             {
-                currentUser ? 
-                <div 
-                    className="option" 
+                currentUser ?
+                
+                <OptionLink
+                    as='div'
                     onClick={()=>auth.signOut()}
                 >
                     Sign Out
-                </div>
+                </OptionLink>
                 :
-                <Link className="option" to='/signin'>
+                <OptionLink to='/signin'>
                     Sign IN
-                </Link>
+                </OptionLink>
             }
+
             <CartIcon />
-        </nav>
-        <CartDropdown />
-    </div>
+
+        </OptionsContainer>
+
+        <CartDropdown /> 
+        
+    </HeaderContainer>
+    
 )
 
 const mapStateToProps = createStructuredSelector({

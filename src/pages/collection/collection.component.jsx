@@ -4,20 +4,24 @@ import { connect } from 'react-redux';
 import {selectCollection} from '../../redux/shop/shop.selector';
 import CollectionItem from '../../components/collection-item/collection-item.component';
 
-import './collection.styles.scss';
+// import './collection.styles.scss';
 
+import {CollectionContainer,CollectionTitle,CollectionItemsContainer} from './collection.styles';
 
 const CollectionPage = ({collection}) => {
     const {title,items,routeName} = collection;
+
     return (
-        <div className="collection-page">
-            <h2 className="title">{title}</h2>
-            <div className="items">
+        <CollectionContainer >
+            <CollectionTitle>
+                {title}
+            </CollectionTitle>
+            <CollectionItemsContainer>
             {
                 Object.keys(items).map(key=>items[key]).map(item=> <CollectionItem key={item.id} routeName={routeName} item={item} />)
             }
-            </div>
-        </div>
+            </CollectionItemsContainer>
+        </CollectionContainer>
     )
 }
 

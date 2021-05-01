@@ -6,6 +6,7 @@ import './collection-item.styles.scss';
 import { withRouter } from 'react-router';
 
 const CollectionItem = ({item,addItem,history,routeName,path}) => {
+
     const {imageUrl,name,price} = item;
     return (
     <div className="collection-item">
@@ -19,7 +20,7 @@ const CollectionItem = ({item,addItem,history,routeName,path}) => {
 
         <div className="collection-footer">
             <span className="name">{name}</span>
-            <span className="price">{price}</span>
+            <span className="price">${price}</span>
         </div>
         <CustomButton onClick={()=> addItem(item)} inverted > ADD to cart </CustomButton>
     </div>

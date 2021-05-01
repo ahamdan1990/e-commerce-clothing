@@ -14,12 +14,16 @@ import Header from './components/header/header.component';
 
 import { toggleCartHidden } from './redux/cart/cart.actions';
 //here we're importing the auth method that we define it in the firebase utils files so we know if a user have been authenticated to our app and what to do with this authenticatin 
-import {auth,createUserProfileDocument} from './firebase/firebase.utils';
+
+// we added the addCollectionAndDocuments utils from firbase here just to add the shop_data so we don't add them manually
+import {auth,createUserProfileDocument/*,addCollectionAndDocuments*/} from './firebase/firebase.utils';
 
 import {setCurrentUser} from './redux/user/user.actions';
 import {selectCurrentUser} from './redux/user/user.selector';
 import {hiddenSelector} from './redux/cart/cart.selectors';
 import {createStructuredSelector} from 'reselect';
+
+// import {selectCollectionForPreview} from './redux/shop/shop.selector';
 
 //Demostrating the Link 
 // const HatsPage = (props) => (
@@ -37,7 +41,7 @@ class App extends React.Component {
   
   componentDidMount() {
 
-    const {setCurrentUser} = this.props;
+    const {setCurrentUser/*,collectionsArray*/} = this.props;
     //this is a method from the firebase auth library that will take a function that have a param of the user state on the auth at our firebase project and get back a function that lets us unsubscribe from the listener we just instantiated which we are store it into the unsbscibeFromAuth so we can stop the onAuthStateChange listener after we get authenticated
     this.unsbscribeFromAuth = auth.onAuthStateChanged(async userAuth =>{
       if (userAuth) {
@@ -50,12 +54,15 @@ class App extends React.Component {
             ...snapshot.data(),
           });
 
-        })
+        });
       } else {
         //when logout we want to set the state to null 
         setCurrentUser(userAuth);
       }
-      
+
+      // we added the addCollectionAndDocuments utils from firbase here just to add the shop_data so we don't add them manually
+
+      // addCollectionAndDocuments('collections',collectionsArray.map(({title,items}) => ({title,items})));
 
     });
   }
@@ -102,7 +109,8 @@ class App extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  hidden: hiddenSelector
+  hidden: hiddenSelector,
+  //collectionsArray: selectCollectionForPreview
 })
 
 const mapDispatchToProps = dispatch => ({

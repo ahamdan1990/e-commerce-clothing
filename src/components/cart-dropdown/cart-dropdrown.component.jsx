@@ -1,17 +1,19 @@
 import React from 'react';
-import CustomButton from '../custom-button/custom-button.component';
+// import CustomButton from '../custom-button/custom-button.component';
 import CartItem from '../cart-item/cart-item.component';
 import { connect } from 'react-redux';
 import {selectCartItems , hiddenSelector} from '../../redux/cart/cart.selectors';
 import {toggleCartHidden} from '../../redux/cart/cart.actions';
 import {createStructuredSelector} from 'reselect';
-import './cart.dropdown.styles.scss';
+// import './cart.dropdown.styles.scss';
+
+import {CartDropdownContainer,CartDropdownItemsContainer,CartDropdownEmptyMessage,CartDropdownCheckoutButton} from './cart-dropdown.styles';
 
 import {withRouter} from 'react-router-dom';
 
 const CartDropdown = ({hidden,cartItems,history,dispatch}) => (
-    <div className={`cart-dropdown ${hidden ? 'not-visible' : 'visible'}`}  >
-        <div className="cart-items">
+    <CartDropdownContainer hidden={hidden}>
+        <CartDropdownItemsContainer>
             {
                 cartItems.length ?
 
@@ -24,21 +26,23 @@ const CartDropdown = ({hidden,cartItems,history,dispatch}) => (
 
                 :
 
-                <span className="empty-message">
+                <CartDropdownEmptyMessage>
                     Your cart is empty
-                    </span>
+                </CartDropdownEmptyMessage>
 
             }
-        </div>
-        <CustomButton 
+        </CartDropdownItemsContainer>
+        <CartDropdownCheckoutButton 
             onClick={
                 ()=>{
                     dispatch(toggleCartHidden());
                     history.push('/checkout');
                 }
             }
-        >GO TO CHECKOUT</CustomButton>
-    </div>
+        >
+            GO TO CHECKOUT
+        </CartDropdownCheckoutButton>
+    </CartDropdownContainer>
 )
 
 // When we dont have a lot of selector we can use this approach where we pass in the whole state and just select whatever we need.

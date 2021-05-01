@@ -19,7 +19,7 @@ export const selectShopCollections = createSelector(
 //convert our object collections into an array so we can use map function on it to display them 
 export const selectCollectionForPreview = createSelector(
     [selectShopCollections],
-    collections => Object.keys(collections).map(key => collections[key])
+    collections => collections ? Object.keys(collections).map(key => collections[key]) : []
 )
 // memoize does the same idea of memoization as reselect does for our selectors, except this time we're memoizing the return of our function which returns our selector:
 
@@ -32,13 +32,15 @@ export const selectCollectionForPreview = createSelector(
 export const selectCollection = memoize(collectionUrlParm => 
     createSelector(
         [selectShopCollections],
-        collections => collections[collectionUrlParm]
+        collections => {
+            return collections? collections[collectionUrlParm] : null
+        } 
     )
 )
 
 export const selectItem = (itemId,collectionId) => {
     return createSelector(
                 [selectCollection(collectionId)],
-                    collection => collection.items[itemId]
+                    collection => collection ? collection.items[itemId] : null
             )
 }

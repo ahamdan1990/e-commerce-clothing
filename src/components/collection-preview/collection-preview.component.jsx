@@ -7,7 +7,6 @@ const CollectionPreview = ({routeName,title,items}) => {
     // Right now every time the CollectionPreview is Used it will rerender all what we have here so that's why if we check the console log it will have 4 arrays because every time the shop page is using CollectionPreview component in the .map of collections it's rerendering the entire component
 
     // console.log(items.filter((item,index) => index<4));
-    
     return (
         <div className="collection-preview">
 
