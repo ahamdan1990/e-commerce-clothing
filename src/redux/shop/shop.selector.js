@@ -44,3 +44,13 @@ export const selectItem = (itemId,collectionId) => {
                     collection => collection ? collection.items[itemId] : null
             )
 }
+
+export const selectIscollectionFetching = createSelector(
+    [selectShop],
+    shop => shop.isFetching
+)
+
+export const selectIsCollectionLoaded = createSelector(
+    [selectShop],
+    shop => !!shop.collections
+)

@@ -38,6 +38,10 @@ class HomePage extends React.Component {
             this.setState({loading:false});
         })
     }
+
+    componentWillUnmount() {
+        this.unsubscribeFromSnapshot();
+    }
     
     render() {
         const {loading} =this.state;

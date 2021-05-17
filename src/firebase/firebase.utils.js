@@ -106,15 +106,22 @@ export const firestore = firebase.firestore();
 //Google Authentication utility
 
 //Here we define what app will be the provider to our app here we define Google but there's also githubProvider facebookProvider...
-const provider = new firebase.auth.GoogleAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 //Custom parameter for the provider 
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
     prompt: "select_account"
 });
 
+export const getCurrentUser = () => {
+    return new Promise((resolve,reject) => {
+        const unsbscribe = auth.onAuthStateChanged(userAuth => {
+            unsbscribe();
+            resolve(userAuth);
+        },reject)
+    })
+}
 
-
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default firebase;
 

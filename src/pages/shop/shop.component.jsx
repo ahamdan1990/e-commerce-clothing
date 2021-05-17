@@ -1,37 +1,55 @@
 import React from 'react';
 
 import {Route} from 'react-router-dom';
-import ItemPreview from '../../components/item-preview/item-preview.component';
-import ColletctionOverview from '../../components/collection-overview/collection-overview.component';
-import CollectionPage from '../collection/collection.component';
+import ItemPreviewContainer from '../../components/item-preview/item-preview.container';
+import CollectionsOverviewContainer from '../../components/collection-overview/collection-overview.container';
+import CollectionPageContainer from '../collection/collection.container';
 
-import {firestore,convertCollectionsSnapshotToMap} from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
 
-import {updateCollections} from '../../redux/shop/shop.actions';
+import {/*fetchCollectionsStartAsync,*/fetchCollectionStart} from '../../redux/shop/shop.actions';
 
-import WithSpinner from '../../components/with-spinner/with-spinner.component';
+// import {firestore,convertCollectionsSnapshotToMap} from '../../firebase/firebase.utils';
+
+
+
+// import WithSpinner from '../../components/with-spinner/with-spinner.component';
+// import { createStructuredSelector } from 'reselect';
+// import { selectIsCollectionLoaded} from '../../redux/shop/shop.selector';
 
 //defining new component with the Higher order component withSpinner that we created in order to load spinner in case the data didn't came back yet
 
-const ColletctionOverviewWithSpinner = WithSpinner(ColletctionOverview);
+// const ColletctionOverviewWithSpinner = WithSpinner(ColletctionOverview);
 
-const CollectionPageWithSpinner = WithSpinner(CollectionPage);
+// const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
-const CollectionItemWithSpinner = WithSpinner(ItemPreview);
+// const CollectionItemWithSpinner = WithSpinner(ItemPreview);
 
 class ShopPage extends React.Component {
 
-    state = {
-        loading: true
-    }
+    // state = {
+    //     loading: true
+    // }
     //we're defining a variable here because we know that we're going to be subscribing to some reference.
 
-    unsubscribeFromSnapshot = null;
+    // unsubscribeFromSnapshot = null;
     
     componentDidMount() {
-        const {updateCollections} = this.props;
-        const collectionRef = firestore.collection('collections');
+
+        
+        //Using thunk middleware
+
+        // const {fetchCollectionsStartAsync} = this.props;
+        // fetchCollectionsStartAsync();
+
+        //using saga middleware
+
+        const {fetchCollectionStart} = this.props;
+        fetchCollectionStart();
+        // Directly from firebase
+
+        // const {updateCollections} = this.props;
+        // const collectionRef = firestore.collection('collections');
 
         // Using Observable onSnapshot and observer method which will gets updated live whenver the data changes into the observables live stream
 
@@ -43,11 +61,11 @@ class ShopPage extends React.Component {
 
         // using Promises to get the colletctions but with this method we're going to update our data only when this component renrender
         
-        collectionRef.get().then(snapshot=> {
-            const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-            updateCollections(collectionsMap);
-            this.setState({loading:false})
-        })
+        // collectionRef.get().then(snapshot=> {
+        //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+        //     updateCollections(collectionsMap);
+        //     this.setState({loading:false})
+        // })
 
         // Using fetch Patterns
         // fetch('https://firestore.googleapis.com/v1/projects/crwn-db-45f8a/databases/(default)/documents/collections')
@@ -62,7 +80,7 @@ class ShopPage extends React.Component {
 
     render() {
         const {match} = this.props;
-        const {loading} = this.state;
+        // const {loading} = this.state;
         return (
             <div className="shop-page">
             {/* without the loading spinner  */}
@@ -72,15 +90,12 @@ class ShopPage extends React.Component {
 
             {/* with the loading spinner  */}
 
-                <Route exact path={`${match.path}`} render={(props) => <ColletctionOverviewWithSpinner isLoading={loading} {...props} /> 
-                } />
+                <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
 
                 
-                <Route exact path={`${match.path}/:collectionId`} render={(props) => <CollectionPageWithSpinner isLoading={loading} {...props} /> 
-                                } />
+                <Route exact path={`${match.path}/:collectionId`} component={CollectionPageContainer} /> 
 
-                <Route exact path={`${match.path}/:collectionId/:itemId`} render={(props) => <CollectionItemWithSpinner isLoading={loading} {...props} /> 
-                                                } />
+                <Route exact path={`${match.path}/:collectionId/:itemId`} component={ItemPreviewContainer} />
             </div>
         );
     };
@@ -88,7 +103,8 @@ class ShopPage extends React.Component {
 };
 
 const mapDispatchToProps = dispatch => ({
-    updateCollections: (collectionsMap) => dispatch(updateCollections(collectionsMap)),
+    fetchCollectionStart: () => dispatch(fetchCollectionStart())
 })
+
 
 export default connect(null,mapDispatchToProps)(ShopPage);

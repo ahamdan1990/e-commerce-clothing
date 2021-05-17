@@ -1,6 +1,6 @@
 import React from 'react';
 import './collection-preview..styles.scss';
-import CollectionItem from '../collection-item/collection-item.component';
+import CollectionItemContainer from '../collection-item/collection-item.container';
 
 const CollectionPreview = ({routeName,title,items}) => {
 
@@ -16,7 +16,7 @@ const CollectionPreview = ({routeName,title,items}) => {
             {/* Here we're using the filter method that returns an array to limit the array items to 4 so and we're doing that by passing index argument which when it will return any item that have index < 4 */}     
                 {  
                     Object.keys(items).map(key=>items[key]).filter((item,index) => index < 4).map(item => 
-                        <CollectionItem key={item.id} path='/shop' routeName={routeName} item={item} />
+                        <CollectionItemContainer key={item.id} path='/shop' routeName={routeName} item={item} />
                     )
                 }
             </div>
