@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Switch,Route,Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 
@@ -36,80 +36,109 @@ import {checkUserSession} from './redux/user/user.actions';
 //   </div>
 // )
 
-class App extends React.Component {
+// class App extends React.Component {
 
-  //we're defining a null variable
-  unsbscribeFromAuth = null;
+//   //we're defining a null variable
+//   unsbscribeFromAuth = null;
   
-  componentDidMount() {
+//   componentDidMount() {
 
-    const {checkUserSession} = this.props;
-    checkUserSession();
-  //   // const {setCurrentUser/*,collectionsArray*/} = this.props;
-  //   //this is a method from the firebase auth library that will take a function that have a param of the user state on the auth at our firebase project and get back a function that lets us unsubscribe from the listener we just instantiated which we are store it into the unsbscibeFromAuth so we can stop the onAuthStateChange listener after we get authenticated
-  //   // this.unsbscribeFromAuth = auth.onAuthStateChanged(async userAuth =>{
-  //   //   if (userAuth) {
-  //   //     const userRef = await createUserProfileDocument(userAuth);
+//     const {checkUserSession} = this.props;
+//     checkUserSession();
+//   //   // const {setCurrentUser/*,collectionsArray*/} = this.props;
+//   //   //this is a method from the firebase auth library that will take a function that have a param of the user state on the auth at our firebase project and get back a function that lets us unsubscribe from the listener we just instantiated which we are store it into the unsbscibeFromAuth so we can stop the onAuthStateChange listener after we get authenticated
+//   //   // this.unsbscribeFromAuth = auth.onAuthStateChanged(async userAuth =>{
+//   //   //   if (userAuth) {
+//   //   //     const userRef = await createUserProfileDocument(userAuth);
 
-  //   //     userRef.onSnapshot(snapshot => {
+//   //   //     userRef.onSnapshot(snapshot => {
 
-  //   //       setCurrentUser({
-  //   //         id:snapshot.id,
-  //   //         ...snapshot.data(),
-  //   //       });
+//   //   //       setCurrentUser({
+//   //   //         id:snapshot.id,
+//   //   //         ...snapshot.data(),
+//   //   //       });
 
-  //   //     });
-  //   //   } else {
-  //   //     //when logout we want to set the state to null 
+//   //   //     });
+//   //   //   } else {
+//   //   //     //when logout we want to set the state to null 
 
-  //   //     setCurrentUser(userAuth);
-  //   //   }
+//   //   //     setCurrentUser(userAuth);
+//   //   //   }
 
-  //   //   // we added the addCollectionAndDocuments utils from firbase here just to add the shop_data so we don't add them manually
+//   //   //   // we added the addCollectionAndDocuments utils from firbase here just to add the shop_data so we don't add them manually
 
-  //   //   // addCollectionAndDocuments('collections',collectionsArray.map(({title,items}) => ({title,items})));
+//   //   //   // addCollectionAndDocuments('collections',collectionsArray.map(({title,items}) => ({title,items})));
 
-  //   // });
-  }
+//   //   // });
+//   }
 
-  // componentWillUnmount() {
-  //   //get back a function that lets us unsubscribe from the listener we just instantiated which is the below method
-  //   // this.unsbscribeFromAuth();
-  // }
+//   // componentWillUnmount() {
+//   //   //get back a function that lets us unsubscribe from the listener we just instantiated which is the below method
+//   //   // this.unsbscribeFromAuth();
+//   // }
 
-  // handleOnClick = () => {
-  //   // if (!this.props.hidden) {
-  //   //   this.props.toggleCartHidden()
-  //   // }
-  // }
+//   // handleOnClick = () => {
+//   //   // if (!this.props.hidden) {
+//   //   //   this.props.toggleCartHidden()
+//   //   // }
+//   // }
 
-  render() {
-    return (
-      <div className="App" onClick={this.handleOnClick}>
-        {/* <HomePage /> */}
+//   render() {
+//     return (
+//       <div className="App" onClick={this.handleOnClick}>
+//         {/* <HomePage /> */}
 
-        {/* When we place component outside the Switch component it will always be rendered onto the screen and will not be part of the route thing  */}
-        <Header />
+//         {/* When we place component outside the Switch component it will always be rendered onto the screen and will not be part of the route thing  */}
+//         <Header />
 
-        <Switch>
+//         <Switch>
         
-          <Route exact path='/' component={HomePage} />
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/checkout' component={CheckoutPage} />
+//           <Route exact path='/' component={HomePage} />
+//           <Route path='/shop' component={ShopPage} />
+//           <Route exact path='/checkout' component={CheckoutPage} />
 
-          <Route 
-            exact 
-            path='/signin' 
-            render={
-              ()=>this.props.currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)
-            } 
-          />
+//           <Route 
+//             exact 
+//             path='/signin' 
+//             render={
+//               ()=>this.props.currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)
+//             } 
+//           />
 
-        </Switch>
-      </div>
-    );
-  }
+//         </Switch>
+//       </div>
+//     );
+//   }
 
+// }
+
+const App = ({checkUserSession,currentUser}) => {
+  useEffect(() => {
+    checkUserSession();
+  },[checkUserSession]);
+  return (
+    <div className="App">
+
+      <Header />
+
+      <Switch>
+      
+        <Route exact path='/' component={HomePage} />
+        <Route path='/shop' component={ShopPage} />
+        <Route exact path='/checkout' component={CheckoutPage} />
+
+        <Route 
+          exact 
+          path='/signin' 
+          render={
+            ()=> currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)
+          } 
+        />
+
+      </Switch>
+
+    </div>
+  );
 }
 
 const mapStateToProps = createStructuredSelector({

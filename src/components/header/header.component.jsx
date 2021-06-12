@@ -24,9 +24,9 @@ import { HeaderContainer,LogoContainer,OptionsContainer,OptionLink } from './hea
 
 import {signOutStart} from '../../redux/user/user.actions';
 
-const Header  = ({currentUser,dispatch,hidden,signOutStart}) => (
-
-    <HeaderContainer>
+const Header  = ({currentUser,dispatch,hidden,signOutStart}) => {
+    return (
+        <HeaderContainer>
 
         <LogoContainer to='/' onClick={()=>hidden ? null : dispatch(toggleCartHidden())}>
             <Logo />
@@ -64,8 +64,9 @@ const Header  = ({currentUser,dispatch,hidden,signOutStart}) => (
         <CartDropdown /> 
         
     </HeaderContainer>
-    
-)
+    )
+}
+
 
 const mapStateToProps = createStructuredSelector({
     currentUser:selectCurrentUser,

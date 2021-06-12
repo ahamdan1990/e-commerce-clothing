@@ -19,4 +19,4 @@ const MenuItem = ({title,imageUrl,size,history,linkUrl,match}) => (
     </div>
 );
 
-export default withRouter(MenuItem);
+export default withRouter(MenuItem); // we are wrapping this component with witRouter in order to get access to match, history, path objects from react router

@@ -19,13 +19,19 @@ class HomePage extends React.Component {
     state={
         loading:true
     }
-    // Without the styled component library 
-    
-    // <div className='homepage'>
-    //     <Directory />
-    // </div>
+    // here in the below we can use useEffect as a componentWillUnmout as well as below :
 
-    // with the styled component library
+    // useEffect(()=>{
+    //     const unsubscribeFromSnapshot = firestore.collection('directory').onSnapshot( snapshot => {
+    //         const collectionMap = convertDirectoryCollectionSnapshotToMap(snapshot);
+    //         updateSections(collectionMap);
+    //     })
+    //     return () => { // it's a function that useEffect will fire up when the component will unmout
+    //         unsubscribeFromSnapshot();
+    //     }
+    // },[])
+
+    // it will be the same as the below but using useEffect() instead of using componentDidMout() and componentWillUnmout() lifeCycle methods
 
     unsubscribeFromSnapshot = null;
 

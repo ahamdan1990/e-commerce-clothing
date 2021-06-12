@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {Route} from 'react-router-dom';
 import ItemPreviewContainer from '../../components/item-preview/item-preview.container';
@@ -25,82 +25,107 @@ import {/*fetchCollectionsStartAsync,*/fetchCollectionStart} from '../../redux/s
 
 // const CollectionItemWithSpinner = WithSpinner(ItemPreview);
 
-class ShopPage extends React.Component {
+// class ShopPage extends React.Component {
 
-    // state = {
-    //     loading: true
-    // }
-    //we're defining a variable here because we know that we're going to be subscribing to some reference.
+//     // state = {
+//     //     loading: true
+//     // }
+//     //we're defining a variable here because we know that we're going to be subscribing to some reference.
 
-    // unsubscribeFromSnapshot = null;
+//     // unsubscribeFromSnapshot = null;
     
-    componentDidMount() {
+//     componentDidMount() {
 
         
-        //Using thunk middleware
+//         //Using thunk middleware
 
-        // const {fetchCollectionsStartAsync} = this.props;
-        // fetchCollectionsStartAsync();
+//         // const {fetchCollectionsStartAsync} = this.props;
+//         // fetchCollectionsStartAsync();
 
-        //using saga middleware
+//         //using saga middleware
 
-        const {fetchCollectionStart} = this.props;
-        fetchCollectionStart();
-        // Directly from firebase
+//         const {fetchCollectionStart} = this.props;
+//         fetchCollectionStart();
+//         // Directly from firebase
 
-        // const {updateCollections} = this.props;
-        // const collectionRef = firestore.collection('collections');
+//         // const {updateCollections} = this.props;
+//         // const collectionRef = firestore.collection('collections');
 
-        // Using Observable onSnapshot and observer method which will gets updated live whenver the data changes into the observables live stream
+//         // Using Observable onSnapshot and observer method which will gets updated live whenver the data changes into the observables live stream
 
-        // this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot=> {
-        //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-        //     updateCollections(collectionsMap);
-        //     this.setState({loading:false})
-        // })
+//         // this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot=> {
+//         //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+//         //     updateCollections(collectionsMap);
+//         //     this.setState({loading:false})
+//         // })
 
-        // using Promises to get the colletctions but with this method we're going to update our data only when this component renrender
+//         // using Promises to get the colletctions but with this method we're going to update our data only when this component renrender
         
-        // collectionRef.get().then(snapshot=> {
-        //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-        //     updateCollections(collectionsMap);
-        //     this.setState({loading:false})
-        // })
+//         // collectionRef.get().then(snapshot=> {
+//         //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+//         //     updateCollections(collectionsMap);
+//         //     this.setState({loading:false})
+//         // })
 
-        // Using fetch Patterns
-        // fetch('https://firestore.googleapis.com/v1/projects/crwn-db-45f8a/databases/(default)/documents/collections')
-        // .then(resp => resp.json())
-        // .then(collections => console.log(collections))
+//         // Using fetch Patterns
+//         // fetch('https://firestore.googleapis.com/v1/projects/crwn-db-45f8a/databases/(default)/documents/collections')
+//         // .then(resp => resp.json())
+//         // .then(collections => console.log(collections))
         
-    }
+//     }
 
-    // componentWillUnmount() {
-    //     this.unsubscribeFromSnapshot();
-    // }
+//     // componentWillUnmount() {
+//     //     this.unsubscribeFromSnapshot();
+//     // }
 
-    render() {
-        const {match} = this.props;
-        // const {loading} = this.state;
-        return (
-            <div className="shop-page">
-            {/* without the loading spinner  */}
-                {/* <Route exact path={`${match.path}`} component={ColletctionOverview} />
-                <Route exact path={`${match.path}/:collectionId`} component={CollectionPage} />
-                <Route exact path={`${match.path}/:collectionId/:itemId`} component={ItemPreview} /> */}
+//     render() {
+//         const {match} = this.props;
+//         // const {loading} = this.state;
+//         return (
+//             <div className="shop-page">
+//             {/* without the loading spinner  */}
+//                 {/* <Route exact path={`${match.path}`} component={ColletctionOverview} />
+//                 <Route exact path={`${match.path}/:collectionId`} component={CollectionPage} />
+//                 <Route exact path={`${match.path}/:collectionId/:itemId`} component={ItemPreview} /> */}
 
-            {/* with the loading spinner  */}
+//             {/* with the loading spinner  */}
 
-                <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
+//                 <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
 
                 
-                <Route exact path={`${match.path}/:collectionId`} component={CollectionPageContainer} /> 
+//                 <Route exact path={`${match.path}/:collectionId`} component={CollectionPageContainer} /> 
 
-                <Route exact path={`${match.path}/:collectionId/:itemId`} component={ItemPreviewContainer} />
-            </div>
-        );
-    };
+//                 <Route exact path={`${match.path}/:collectionId/:itemId`} component={ItemPreviewContainer} />
+//             </div>
+//         );
+//     };
 
-};
+// };
+
+const ShopPage = ({fetchCollectionStart,match}) => {
+    
+    useEffect(() => {
+        fetchCollectionStart();
+    }, [fetchCollectionStart])
+
+    return (
+        <div className="shop-page">
+        {/* without the loading spinner  */}
+            {/* <Route exact path={`${match.path}`} component={ColletctionOverview} />
+            <Route exact path={`${match.path}/:collectionId`} component={CollectionPage} />
+            <Route exact path={`${match.path}/:collectionId/:itemId`} component={ItemPreview} /> */}
+
+        {/* with the loading spinner  */}
+
+            <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
+
+            
+            <Route exact path={`${match.path}/:collectionId`} component={CollectionPageContainer} /> 
+
+            <Route exact path={`${match.path}/:collectionId/:itemId`} component={ItemPreviewContainer} />
+        </div>
+    );
+}
 
 const mapDispatchToProps = dispatch => ({
     fetchCollectionStart: () => dispatch(fetchCollectionStart())
